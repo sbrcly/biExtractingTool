@@ -43,98 +43,99 @@ const nameVarients = [
 ]
 
 getBis.addEventListener('click', () => {
-    const donBestGames = gamesInput.value;
-    const parseGames = donBestGames.split('\n');
-    const dbGames = parseGames.filter(game => {
-    let item = game.split(' ');
-    if (item.length === 1) {
-        return item[0].length > 2 &&
-                item[0].length <= 6 &&
-                parseInt(item[0]) % 1 === 0;
-    }   else {
-        return item[0].length <= 6 && parseInt(item[0]) % 1 === 0;
-    }
-    
-    });
-    
-    for (let game of dbGames) {
-        const splitGame = game.split(' ');
-        if (!splitGame[1]) {
-            game = game + ' TBD';
-            dbGamesFinal.push(game);
+    if (gamesInput.value !== '') {
+        const donBestGames = gamesInput.value;
+        const parseGames = donBestGames.split('\n');
+        const dbGames = parseGames.filter(game => {
+        let item = game.split(' ');
+        if (item.length === 1) {
+            return item[0].length > 2 &&
+                    item[0].length <= 6 &&
+                    parseInt(item[0]) % 1 === 0;
         }   else {
-            dbGamesFinal.push(game);
-        }
-    }
-    
-    const oddBis = dbGamesFinal.filter(game => {
-        const bi = game.split(' ')[0];
-        return Number(bi) % 2 !== 0;
-    });
-
-    const evenBis = dbGamesFinal.filter(game => {
-        const bi = game.split(' ')[0];
-        return Number(bi) % 2 === 0;
-    });
-
-    const tables = document.querySelectorAll('table');
-
-    for (let table of tables) {
-        const tableHeading = document.createElement('tr');
-        tableHeading.classList.add('tableHeading');
-    
-        const awayBIs = document.createElement('td');
-        awayBIs.innerText = 'Away BI';
-    
-        const awayTeams = document.createElement('td');
-        awayTeams.innerText = 'Away Team';
-    
-        const homeBIs = document.createElement('td');
-        homeBIs.innerText = 'Home BI';
-    
-        const homeTeams = document.createElement('td');
-        homeTeams.innerText = 'Home Team';
-    
-        tableHeading.append(awayBIs, awayTeams, homeBIs, homeTeams);
-        table.append(tableHeading);
-        table.classList.add('show-table');
-    };
-
-    for (let i = 0; i < oddBis.length; i++) {
-        const newGame = document.createElement('tr');
-
-        const awayBI = document.createElement('td');
-        awayBI.classList.add('awayBI');
-        awayBI.innerText = oddBis[i].split(' ')[0];
-
-        const awayTeam = document.createElement('td');
-        awayTeam.classList.add('awayTeam');
-        awayTeam.innerText = oddBis[i].split(' ').slice(1, oddBis[i].length).join(' ');
-
-        const homeBI = document.createElement('td');
-        homeBI.classList.add('homeBI');
-        homeBI.innerText = evenBis[i].split(' ')[0];
-
-        const homeTeam = document.createElement('td');
-        homeTeam.classList.add('homeTeam');
-        homeTeam.innerText = evenBis[i].split(' ').slice(1, evenBis[i].length).join(' ');
-
-        newGame.append(awayBI, awayTeam, homeBI, homeTeam);
-        if (i < oddBis.length / 2) {
-            teamsList.append(newGame);
-        }   else {
-            teamsList2.append(newGame);
+            return item[0].length <= 6 && parseInt(item[0]) % 1 === 0;
         }
         
+        });
+        
+        for (let game of dbGames) {
+            const splitGame = game.split(' ');
+            if (!splitGame[1]) {
+                game = game + ' TBD';
+                dbGamesFinal.push(game);
+            }   else {
+                dbGamesFinal.push(game);
+            }
+        }
+        
+        const oddBis = dbGamesFinal.filter(game => {
+            const bi = game.split(' ')[0];
+            return Number(bi) % 2 !== 0;
+        });
+    
+        const evenBis = dbGamesFinal.filter(game => {
+            const bi = game.split(' ')[0];
+            return Number(bi) % 2 === 0;
+        });
+    
+        const tables = document.querySelectorAll('table');
+    
+        for (let table of tables) {
+            const tableHeading = document.createElement('tr');
+            tableHeading.classList.add('tableHeading');
+        
+            const awayBIs = document.createElement('td');
+            awayBIs.innerText = 'Away BI';
+        
+            const awayTeams = document.createElement('td');
+            awayTeams.innerText = 'Away Team';
+        
+            const homeBIs = document.createElement('td');
+            homeBIs.innerText = 'Home BI';
+        
+            const homeTeams = document.createElement('td');
+            homeTeams.innerText = 'Home Team';
+        
+            tableHeading.append(awayBIs, awayTeams, homeBIs, homeTeams);
+            table.append(tableHeading);
+            table.classList.add('show-table');
+        };
+    
+        for (let i = 0; i < oddBis.length; i++) {
+            const newGame = document.createElement('tr');
+    
+            const awayBI = document.createElement('td');
+            awayBI.classList.add('awayBI');
+            awayBI.innerText = oddBis[i].split(' ')[0];
+    
+            const awayTeam = document.createElement('td');
+            awayTeam.classList.add('awayTeam');
+            awayTeam.innerText = oddBis[i].split(' ').slice(1, oddBis[i].length).join(' ');
+    
+            const homeBI = document.createElement('td');
+            homeBI.classList.add('homeBI');
+            homeBI.innerText = evenBis[i].split(' ')[0];
+    
+            const homeTeam = document.createElement('td');
+            homeTeam.classList.add('homeTeam');
+            homeTeam.innerText = evenBis[i].split(' ').slice(1, evenBis[i].length).join(' ');
+    
+            newGame.append(awayBI, awayTeam, homeBI, homeTeam);
+            if (i < oddBis.length / 2) {
+                teamsList.append(newGame);
+            }   else {
+                teamsList2.append(newGame);
+            }
+            
+        }
+        const sendToExcel = document.createElement('button');
+        sendToExcel.classList.add('sendToExcel');
+        sendToExcel.innerText = 'Export to Excel';
+    
+        todaysGames.append(sendToExcel);
+        getBis.disabled = 'true';
+        excelBtn = document.querySelector('.sendToExcel');
     }
-    const sendToExcel = document.createElement('button');
-    sendToExcel.classList.add('sendToExcel');
-    sendToExcel.innerText = 'Export to Excel';
-
-    todaysGames.append(sendToExcel);
-    getBis.disabled = 'true';
-    excelBtn = document.querySelector('.sendToExcel');
-
 });
 
 

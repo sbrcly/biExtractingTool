@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DonBest Games</title>
+    <script src="https://unpkg.com/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <header class="heading">
+        <h1>DonBest BI Extractor tool</h1>
+        <h2>Instructions:</h2>
+        <ol>
+            <li>Go to <a href="" id="dbLink">This Link</a></li>
+            <li>Choose the schedule you'd like to view</li>
+            <li>Copy the games and paste them into the box below</li>
+            <li>Click "Extract BI's"</li>
+            <li>Select the target excel file: <input type="file" id="input"></li>
+            <li>If everything looks good, click "Send to Excel"</li>
+        </ol>
+    </header>
+
+    <main class="main-content">
+        <div class="todays-games">
+            <textarea name="donBestGames" id="donBestGames" cols="50" rows="20"></textarea>
+            <table class="teams-list"></table>
+            <table class="teams-list2"></table>
+        </div>
+        <button id="getBis">Extract BI's</button>
+    </main>
+    
+    
+    <script src="/app.js"></script>
+</body>
+</html>
